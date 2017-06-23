@@ -30,8 +30,8 @@ public class App
                 String url = "jdbc:sqlite:dirtybank.db";
                 // create a connection to the database
                  conn = DriverManager.getConnection(url);
-
-
+            boolean isNotLogged = true;
+           do{
 
             // Validation /////
             System.out.println("Please enter your account name");
@@ -45,11 +45,14 @@ public class App
             statement.setString(2, password);
             ResultSet resultSet = statement.executeQuery();
             
-            if (resultSet.next()) {
+            if  (resultSet.next()) {
             	System.out.println("Welcome Mr. " + resultSet.getString("name"));
+            	isNotLogged = false;
             } else {
             	System.err.println("Login incorrect");
+            	isNotLogged = true;
             }
+           } while (isNotLogged);
 
             } catch (Exception e) {
                 System.err.println("Error connecting to db : " + e.getMessage());
